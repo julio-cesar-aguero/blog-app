@@ -5,8 +5,11 @@ export class BlogComponent extends LitElement {
         css`
             :host {
                 display: block;
+                
             }
             .container{
+                position: relative;
+                z-index: 10;
                 background-color: #f2f2f2ca;
                 width: 80%;
                 margin: 30px auto;
@@ -117,6 +120,10 @@ export class BlogComponent extends LitElement {
                     height: 100%;
                     object-fit: cover;
                 }
+                .blog-text
+            {
+                display: block;
+            }
             }
         `
     ];
@@ -124,7 +131,7 @@ export class BlogComponent extends LitElement {
     render() {
         return html`
             <div class="container">
-                <div class="blog">
+                <div id="blog" class="blog">
                     <h2 class="h2">Lastest Blog Post</h2>
                     <div class="blog-card-group">
                         <div class="blog-card">

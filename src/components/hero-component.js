@@ -1,10 +1,9 @@
 import { LitElement, html, css } from 'lit';
-
+import './modal-popup'
 export class HeroComponent extends LitElement {
     static styles = [
         css`
             .hero{
-                position: relative;
                 display: flex;
                 justify-content: center;
                 align-items: flex-start;
@@ -116,8 +115,16 @@ export class HeroComponent extends LitElement {
                         Specialized in Front End Developer framewroks and librarys(React JS, VueJS, Lit Element )
                     </p>
                     <div class="hero__btn-group">
-                        <a href="#" class="btn btn-primary">Add Topic</a>
-                        <a href="#" class="btn btn-secondary">View Topics</a>
+                    <a href="#" class="btn btn-primary" @click="${()=>{
+                        const modalState = true;
+                        this.dispatchEvent(
+                            new CustomEvent("activeM", {
+                                bubbles: true,
+                                detail: { modalState },
+                            })
+                        )
+                    }}">Add Topic</a>
+                        <a href="javascript:alert(document.domain)" class="btn btn-secondary">View Topics</a>
                     </div>
                 </div>
                 <div class="right">
