@@ -11,7 +11,7 @@
 To get started:
 
 ```bash
-npm init @open-wc
+npm install
 # requires node 10 & npm 6 or higher
 ```
 
