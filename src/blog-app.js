@@ -23,7 +23,8 @@ class BlogApp extends LitElement {
       position: relative;
       z-index: 10;
       width: 100%;
-      height: 100vh;
+      height: auto;
+      min-height: 100vh;
       padding-top: 100px;
       margin: 0 auto;
       display: flex;
