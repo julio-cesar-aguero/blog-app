@@ -108,6 +108,15 @@ export default css`
     margin-top: 20px;
     border: 1px solid var(--medium-gray);
   }
+  .nav__user{
+    position: relative;
+  }
+.nav__inner-user{
+  background-color: #3333;
+  border-radius: 10px;
+  padding: 0 0.8em;
+  gap: 1.5em;
+}
   .nav__sign {
     display: inline-block;
     color: var(--medium-gray);
@@ -177,6 +186,16 @@ export default css`
     .nav__inner--show{
       opacity: 1;
       pointer-events: unset;
+    }
+    .nav__user{
+      margin-left: 0;
+      display: flex;
+      gap: 20px;
+      width: 100%;
+      justify-content: flex-end;
+    }
+    .nav__inner-user{
+      left: -50%;
     }
     .nav__login{
       width: max-content;

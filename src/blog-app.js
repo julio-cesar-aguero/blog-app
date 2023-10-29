@@ -42,7 +42,7 @@ class BlogApp extends LitElement {
 
   render() {
     return html`
-    <navbar-component></navbar-component>
+    <navbar-component .logged="${this.isLogged}" @logout=${this._handdleLogOut}></navbar-component>
     <main>
     ${
       this.isLogged ? html`<home-view></home-view>`:html`<login-register-component></login-register-component>`
@@ -51,6 +51,14 @@ class BlogApp extends LitElement {
     </main>
     
     `;
+  }
+  _handdleLogOut(evt){
+    
+    if(evt.detail.sessionState === 'destroy'){
+      console.log(evt.detail);
+      this.isLogged = false;
+      this.requestUpdate();
+    }
   }
 }
 

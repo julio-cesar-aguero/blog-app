@@ -66,15 +66,16 @@ export class ModalPopup extends LitElement {
             .form input,textarea{
                 height: 30px;
                 text-align:center;
-                padding: 1em 0.3em;
+                padding: 0.5em 0.3em;
                 margin: 0.5em;
                 width: 100%;
                 border: none;
-                border-radius: 10px;
+                border-radius: 5px;
                 outline: none;
+                font-size: 1.2em;
             }
             .form input:focus,textarea:focus{
-                background-color: #333333;
+                background-color: #3e3d3de2;
                 color: white;
             }
              .group-button{
@@ -91,10 +92,15 @@ export class ModalPopup extends LitElement {
                 border-radius: 10px;
                 font-size: 1em;
                 font-weight: 800;
+                cursor: pointer;
              }
              .group-button .btn-primary{
                 background-color: #4582fd;
                 color: white;
+            }
+            .group-button .btn-primary{
+                padding: 0.5em;
+                font-size: 1.5rem;
             }
             .group-button .btn-secondary{
                 background-color: #333333;
@@ -145,16 +151,18 @@ export class ModalPopup extends LitElement {
                     <button 
                         class="btn btn-primary"
                         @click="${() => {
-                            const data = this.form;
-                            const modalState = false;
-                            this.dispatchEvent(
-                                new CustomEvent("getForm", {
-                                    bubbles: true,
-                                    detail: { data,modalState },
-                                })
-                            )
-                        }}"
-                    >+</button>
+                const data = this.form;
+                const modalState = false;
+                this.dispatchEvent(
+                    new CustomEvent("getForm", {
+                        bubbles: true,
+                        detail: { data, modalState },
+                    })
+                )
+            }}"
+                    >
+                    <ion-icon name="add-circle"></ion-icon>
+                    </button>
                     <button class="btn btn-secondary"  @click="${() => {
                 const modalState = false;
                 this.dispatchEvent(
@@ -183,9 +191,9 @@ export class ModalPopup extends LitElement {
         console.log(this.form);
         this._formIsEmpty();
     }
-    _formIsEmpty(){
+    _formIsEmpty() {
         console.log('entro')
-        
+
     }
 }
 customElements.define('modal-popup', ModalPopup);

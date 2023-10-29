@@ -1,6 +1,8 @@
 import { LitElement, html, css } from "lit";
 import styles from "../css/navbar-styles";
 import { Features } from "../constants/index";
+import './user-component';
+
 export class NavbarComponent extends LitElement {
   static get styles() {
     return [styles];
@@ -9,6 +11,7 @@ export class NavbarComponent extends LitElement {
     return {
       isOpen: { type: Boolean },
       currentDropdown: { type: String },
+      logged: { type: Boolean }
     };
   }
 
@@ -99,12 +102,41 @@ export class NavbarComponent extends LitElement {
                 <a href="" class="nav__link">About</a>
               </li>
 
-              <li class="nav__login">
-                <a href="" class="nav__sign">Login</a>
+              ${this.logged ? html`
+              <div class="nav__user">
+              <li class="nav__item nav__item-user">
+                <span class="nav__parent">
+                <ion-icon name="person"></ion-icon>
+                  User
+                  <img
+                    src="../../assets/images/icon-arrow-down.svg"
+                    alt=""
+                    class="nav__arrow"
+                  />
+                </span>
+
+                <ul class="nav__inner nav__inner-user">
+                  <li class="nav__dropdown">
+                    <a href="" class="nav__link">Me</a>
+                  </li>
+                  <li class="nav__dropdown">
+                    <a href="" class="nav__link" @click="${this._logOut}">Log Out</a>
+                  </li>
+                </ul>
               </li>
-              <li class="nav__login nav__login--border">
-                <a href="" class="nav__sign">Register</a>
-              </li>
+
+              </div>
+              ` : html`<div class="nav__user">
+                <li class="nav__login">
+                  <a href="" class="nav__sign">Login</a>
+                </li>
+                <li class="nav__login nav__login--border">
+                  <a href="" class="nav__sign">Register</a>
+                </li>
+                </div>`
+      }
+              
+              
             </ul>
           </div>
         </nav>
@@ -128,6 +160,15 @@ export class NavbarComponent extends LitElement {
         this.toggleMenu(e);
       }
     }
+  }
+  _logOut() {
+    const sessionState = 'destroy'
+    this.dispatchEvent(
+      new CustomEvent("logout", {
+        bubbles: true,
+        detail: { sessionState },
+      })
+    )
   }
   toggleMenu(e) {
     let menu = e.target.parentElement.children[1];
