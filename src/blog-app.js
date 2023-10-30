@@ -37,7 +37,7 @@ class BlogApp extends LitElement {
   constructor() {
     super();
     this.header = 'My app';
-    this.isLogged = true;
+    this.isLogged = false;
   }
 
   render() {
