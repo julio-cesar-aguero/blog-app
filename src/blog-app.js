@@ -6,10 +6,11 @@ import './views/Home'
 class BlogApp extends LitElement {
   static properties = {
     header: { type: String },
-    isLogged: { type: Boolean}
+    sessionUser: { type: Object },
+    isLogged: { type: Boolean }
   }
 
- 
+
   static styles = css`
 
     :host{
@@ -42,20 +43,21 @@ class BlogApp extends LitElement {
 
   render() {
     return html`
-    <navbar-component .logged="${this.isLogged}" @logout=${this._handdleLogOut}></navbar-component>
+    <navbar-component .logged="${this.isLogged}" .session="${this.sessionUser}" @logout=${this._handleLogOut}></navbar-component>
     <main>
-    ${
-      this.isLogged ? html`<home-view></home-view>`:html`<login-register-component></login-register-component>`
-    }
-    
+    ${this.isLogged ? html`<home-view .session="${this.sessionUser}"></home-view>` : html`<login-register-component @success="${this._handleSuccess}"></login-register-component>`
+      }
     </main>
-    
     `;
   }
-  _handdleLogOut(evt){
-    
-    if(evt.detail.sessionState === 'destroy'){
-      console.log(evt.detail);
+  _handleSuccess(evt) {
+    console.log(evt.detail.sessionUser);
+    if (evt.detail.sessionUser.login === true) {
+      this.isLogged = true;
+    }
+  }
+  _handleLogOut(evt) {
+    if (evt.detail.sessionState === 'destroy') {
       this.isLogged = false;
       this.requestUpdate();
     }

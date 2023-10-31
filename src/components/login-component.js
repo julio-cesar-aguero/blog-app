@@ -30,7 +30,7 @@ export class LoginComponent extends LitElement {
                     </span>
                     <small>
                     <b>LLene los campos:</b>
-                    <span>Email, Password</span>
+                    <span>${this.alertToast.message}</span>
                     </small>
                     <span class="close-toast" @click="${this._closeToast}">
                     <ion-icon name="close"></ion-icon>
