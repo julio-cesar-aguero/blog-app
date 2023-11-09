@@ -1,6 +1,7 @@
 import { css } from "lit";
 export default css`
   .container {
+    background-color: var(--bg-color);
     width: 100%;
     position: fixed;
     z-index: 100;
@@ -12,6 +13,11 @@ export default css`
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+  .nav__img{
+    margin-top: 30px;
+    width: 100px;
+    border-radius: 50%;
   }
   .nav__hamburger {
     position: absolute;
@@ -46,7 +52,7 @@ export default css`
     top: -5%;
     bottom: 0;
     right: 0;
-    background-color: #ffffff;
+    background-color: var(--bg-color);
     width: 55%;
     max-width: 400px;
     height: 100%;
@@ -61,7 +67,7 @@ export default css`
   .nav__item {
     width: 80%;
     margin: 0 auto;
-    color: var(--almost-black);
+    color: var(--text-color);
     cursor: pointer;
     padding: 20px 0;
   }
@@ -87,16 +93,16 @@ export default css`
     gap: 1.3em;
     padding: 20px 0;
     font-weight: 500;
-    color: #000000cd
+    color: var(--text-color);
   }
   .nav__inner .nav__link{
-    color: #333333;
+    color: var(--text-color);
     padding: 0 0.5em;
   }
   .nav__link {
     font-weight: 300;
     text-decoration: none;
-    color: var(--almost-black);
+    color: var(--text-color);
   }
   .nav__login {
     width: 80%;
@@ -112,14 +118,14 @@ export default css`
     position: relative;
   }
 .nav__inner-user{
-  background-color: #3333;
+  background-color: var(--bg-color);
   border-radius: 10px;
   padding: 0 0.8em;
   gap: 1.5em;
 }
   .nav__sign {
     display: inline-block;
-    color: var(--medium-gray);
+    color: var(--text-color);
     padding: 0.7em;
     text-decoration: none;
   }
@@ -129,8 +135,12 @@ export default css`
       gap: 4em;
       overflow: visible;
       padding: 0 5em 0;
-      backdrop-filter: blur(120px);
-      border-radius: 0 0 1em 1em;
+      background-color: var(--bg-color);
+      transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    }
+    .nav--white{
+      background-color: var(--bg-color);
+      transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
     }
     .nav__hamburger {
       display: none;
@@ -175,7 +185,7 @@ export default css`
       width: max-content;
       height: auto;
       padding: 2em;
-      background-color: #fff;
+      background-color: var(--bg-color);
       z-index: 1000;
       border-radius: 10px;
       box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
@@ -187,6 +197,30 @@ export default css`
       opacity: 1;
       pointer-events: unset;
     }
+    .switches{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;  
+      
+  
+      
+  }
+  .toggle-theme{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+  }
+  .toggle-theme__icon{
+      width: 20px;
+      
+  }
+  .toggle-theme__text{
+      margin-left: 5px;
+      font-size: 0.7em;
+      color: var(--primary-color);
+  }
     .nav__user{
       margin-left: 0;
       display: flex;
@@ -196,6 +230,13 @@ export default css`
     }
     .nav__inner-user{
       left: -50%;
+    }
+    .nav__inner-user .nav__dropdown{
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      font-size: 1em;
+      color: blue;
     }
     .nav__login{
       width: max-content;

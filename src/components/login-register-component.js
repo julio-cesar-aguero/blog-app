@@ -20,9 +20,6 @@ export class LoginRegisterComponent extends LitElement {
       message: "",
     };
   }
-  firstUpdated() {
-    console.log(users)
-  }
   render() {
     return html`
       <div class="wrapper">

@@ -1,5 +1,8 @@
 import { LitElement, html } from 'lit';
+import './google-login';
+import './facebook-login';
 import styles from '../css/login-styles'
+const clientId = "209356081847-4daott4ap0m8b6cv7u39vk2hfbirp1g6.apps.googleusercontent.com"
 export class LoginComponent extends LitElement {
     static get properties() {
         return {
@@ -12,8 +15,8 @@ export class LoginComponent extends LitElement {
         super();
         this.enabledSubmit = true;
         this.form = {
-            email: 'mail@mail.com',
-            password: '123',
+            email: 'julio.aguero@gmail.com',
+            password: '123456',
         }
     }
     static styles = [
@@ -23,7 +26,6 @@ export class LoginComponent extends LitElement {
         return html`
         <div class="form-box login">
                 <h2>Login</h2>
-                <h3>${this.alertToast.state}</h3>
                 <div class="${this.alertToast.state ? 'alert-message alert-message--active' : 'alert-message'}">
                     <span class="alert-toast">
                     <ion-icon name="alert-circle"></ion-icon>
@@ -59,6 +61,15 @@ export class LoginComponent extends LitElement {
                         <a href="#">Forgot Password</a>
                     </div>
                     <button  type="submit" @click="${this._login}" class="btn">Login</button>
+                    
+                    <span>OR</span>
+                    <br>
+                    <div id="signInButton">
+                        <google-login @successGoogle="${this.onSignIn}"></google-login>
+                    </div>
+                    <div id="signInButton">
+                        <facebook-login @successFacebook="${this.onSignIn}"></facebook-login>
+                    </div>
                     <div class="login-register">
                         <p>Don´t have an account?
                         <a href="#" @click="${() => {
@@ -82,6 +93,11 @@ export class LoginComponent extends LitElement {
             detail: { data: this.form },
             bubbles: true, composed: true
         }))
+    }
+    onSignIn(evt) {
+        evt.preventDefault();
+        localStorage.setItem('Google',evt.detail.params);
+        console.log('Google',evt.detail);
     }
     _handleChange(evt) {
         const { target } = evt;

@@ -8,8 +8,8 @@ export class HeroComponent extends LitElement {
                 justify-content: center;
                 align-items: flex-start;
                 width: 80%;
-                margin: 0 auto;
-                background-color: #ffffff67;
+                margin: 100px auto;
+                background-color: var(--bg-card-color);
                 padding: 1em 1.5em;
                 border-radius: 1em;
             }
@@ -32,11 +32,11 @@ export class HeroComponent extends LitElement {
                 text-align: center;
             }
             .hero b{
-                color: #1e56ff;
+                color: var(--primary-color);
                 font-weight: 800;
             }
             .hero .h3{
-                color: #f2f2f2;
+                color: var(--text-color);
                 margin-bottom: 2rem;
             }
             .left p{
@@ -58,16 +58,16 @@ export class HeroComponent extends LitElement {
                 text-decoration: none;
             }
             .btn-primary{
-                background-color: #1e56ff;
+                background-color: var(--primary-color);
                 color: white;
             }
             .btn-primary:hover{
-                background: #f2f2f2;
-                color: #1e56ff;
+                background-color: var(--bg-color);
+                color: var(--primary-color);
             }
             .btn-secondary{
                 backdrop-filter: blur(200px);
-                color: #1e56ff;
+                color: var(--primary-color);
                 border: 3px solid #1e56ff;
             }
             .hero .right{
@@ -108,12 +108,9 @@ export class HeroComponent extends LitElement {
         <div class="hero">
             <div class="container">
                 <div class="left">
-                    <h1 class="h1">Hi I'm <b>Julio Cesar Aguero</b>
-                        <br>Web Developer
+                    <h1 class="h1">Bienvenido <b>Julio Cesar Aguero</b>
                     </h1>
-                    <p>
-                        Specialized in Front End Developer framewroks and librarys(React JS, VueJS, Lit Element )
-                    </p>
+                    
                     <div class="hero__btn-group">
                     <a href="#" class="btn btn-primary" @click="${()=>{
                         const modalState = true;

@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import '../components/hero-component'
 import '../components/blog-component'
+import '../components/aside-component'
 
 export class Home extends LitElement {
     static get properties() {
@@ -19,7 +20,7 @@ export class Home extends LitElement {
 
     constructor() {
         super();
-        this.modalActive = true;
+        this.modalActive = false;
     }
     render() {
         return html`
@@ -31,7 +32,6 @@ export class Home extends LitElement {
         `;
     }
     _addTopic(evt) {
-        console.log(evt.detail)
         this._activeModal(evt);
     }
     _activeModal(evt) {

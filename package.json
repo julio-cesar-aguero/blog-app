@@ -10,7 +10,9 @@
     "start": "web-dev-server"
   },
   "dependencies": {
-    "lit": "^2.0.2"
+    "gapi-script": "^1.2.0",
+    "lit": "^2.0.2",
+    "react-google-login": "^5.2.2"
   },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.4.17",

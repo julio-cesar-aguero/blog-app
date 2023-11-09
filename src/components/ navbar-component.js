@@ -11,7 +11,10 @@ export class NavbarComponent extends LitElement {
     return {
       isOpen: { type: Boolean },
       currentDropdown: { type: String },
-      logged: { type: Boolean }
+      logged: { type: Boolean },
+      toggleTheme: { type: String},
+      toggleIcon: { type: String},
+      toggleText: { type: String},
     };
   }
 
@@ -20,18 +23,21 @@ export class NavbarComponent extends LitElement {
     this.isOpen = false;
     this.currentDropdown = "";
   }
-  updated() { }
+
   firstUpdated() {
+    this.toggleTheme = this.shadowRoot.getElementById('toggle-theme');
+    this.toggleIcon = this.shadowRoot.getElementById('toggle-icon');
+    this.toggleText = this.shadowRoot.getElementById('toggle-text');
     this.currentDropdown = this.shadowRoot.getElementById("nav-overlay");
     this._resize();
   }
   render() {
     return html`
       <div class="container">
-        <nav class="nav">
+        <nav class="${this.logged ? 'nav':'nav nav--white'}">
           <img
             class="nav__img"
-            src="../../assets/images/logo.svg"
+            src="../../assets/logo-black.svg"
             alt="logo-img"
           />
           <div
@@ -101,6 +107,12 @@ export class NavbarComponent extends LitElement {
               <li class="nav__item">
                 <a href="" class="nav__link">About</a>
               </li>
+              <div class="switches">
+        <div id="toggle-theme" class="toggle-theme" @click="${this._changeTheme}">
+          <img id="toggle-icon" class="toggle-theme__icon" src="../../assets/moon.svg" alt="icon toggle theme">
+          <p id="toggle-text" class="toggle-theme__text">Dark Mode</p>
+        </div>
+      </div>
 
               ${this.logged ? html`
               <div class="nav__user">
@@ -117,9 +129,11 @@ export class NavbarComponent extends LitElement {
 
                 <ul class="nav__inner nav__inner-user">
                   <li class="nav__dropdown">
+                    <ion-icon name="person"></ion-icon>
                     <a href="" class="nav__link">Me</a>
                   </li>
                   <li class="nav__dropdown">
+                    <ion-icon name="exit"></ion-icon>
                     <a href="" class="nav__link" @click="${this._logOut}">Log Out</a>
                   </li>
                 </ul>
@@ -143,6 +157,15 @@ export class NavbarComponent extends LitElement {
       </div>
     `;
   }
+  _logOut() {
+    const sessionState = 'destroy'
+    this.dispatchEvent(
+      new CustomEvent("logout", {
+        bubbles: true,
+        detail: { sessionState },
+      })
+    )
+  }
   _openCloseMenu(e) {
     e.preventDefault();
     this.isOpen = !this.isOpen;
@@ -150,7 +173,6 @@ export class NavbarComponent extends LitElement {
   _option(e) {
     e.preventDefault();
     const currentElement = e.target;
-    let currentDropdown = currentElement.parentElement.children[1];
     if (this._isActive(currentElement, "nav__parent")) {
       const subMenu = currentElement.parentElement.children[1];
       if (window.innerWidth < 768) {
@@ -161,15 +183,6 @@ export class NavbarComponent extends LitElement {
       }
     }
   }
-  _logOut() {
-    const sessionState = 'destroy'
-    this.dispatchEvent(
-      new CustomEvent("logout", {
-        bubbles: true,
-        detail: { sessionState },
-      })
-    )
-  }
   toggleMenu(e) {
     let menu = e.target.parentElement.children[1];
     if (!this._isActive(menu, "nav__inner--show")) {
@@ -178,12 +191,22 @@ export class NavbarComponent extends LitElement {
     menu.classList.toggle("nav__inner--show");
     this.currentDropdown = menu;
   }
+  _changeTheme(e){
+    document.body.classList.toggle('dark');
+    if(this.toggleIcon.src.includes('moon.svg')){
+      this.toggleIcon.src='../../assets/sun.svg';
+      this.toggleText.textContent='Light Mode';
+    }
+    else{
+      this.toggleIcon.src='../../assets/moon.svg';
+      this.toggleText.textContent='Dark Mode';
+    }
+  }
   _closeDropdown() {
     if (this._isActive(this.currentDropdown, "nav__inner--show")) {
       this.currentDropdown.classList.remove("nav__inner--show");
     }
   }
-
   _isActive(element, string) {
     return element.classList.value.includes(string);
   }

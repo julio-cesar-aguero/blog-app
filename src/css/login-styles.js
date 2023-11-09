@@ -1,16 +1,17 @@
 import { css } from "lit";
 export default css`
 .wrapper{
+  
   position: relative;
   width: 300px;
-  height: 500px;
+  height: 550px;
   max-height: 100%;
-  background-color: transparent;
+  background-color: var(--bg-card-color);
   z-index: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto;
+  margin: 100px auto;
   padding: 4.5em;
   border-radius: 1em;
   border: 2px solid rgba(225, 255, 255, .5);
@@ -30,14 +31,14 @@ export default css`
 }
 .form-box h2{
   font-size: 2em;
-  color: #162938;
+  color: var(--text-color);
   text-align: center;
 }
 .input-box{
   width: 100%;
   position: relative;
   height: 50px;
-  border-bottom: 2px solid #162938;
+  border-bottom: 2px solid var(--primary-color);
   margin: 30px;
 }
 .input-box label{
@@ -46,7 +47,7 @@ export default css`
   left: 5px;
   transform: translateY(-50%);
   font-size: 1em;
-  color: #162938;
+  color: var(--text-color);
   font-weight: 500;
   pointer-events: none;
   transition: .5s;
@@ -63,7 +64,7 @@ export default css`
   border: none;
   outline: none;
   font-size: 1em;
-  color: #162938;
+  color: var(--text-color);
   font-weight: 600;
   padding: 0 35px 0 5px;
 }
@@ -71,13 +72,13 @@ export default css`
   position: absolute;
   right: 8px;
   font-size: 1.2em;
-  color: #ffffff;
+  color: var(--text-color);
   line-height: 57px;
 }
   .remember-forgot{
     width: 100%;
     font-size: .9em;
-    color: #162938;
+    color: var(--text-color);
     font-weight: 500;
     margin: -15px 10px 15px;
     display: flex;
@@ -86,7 +87,7 @@ export default css`
     cursor: pointer;
   }
   .remember-forgot label input{
-    accent-color: #162938;
+    accent-color: var(--primary-color);
     margin-right: 3px;
   }
   .remember-forgot a{
@@ -99,23 +100,24 @@ export default css`
     width: 100%;
     margin: 20px auto;
     height: 45px;
-    background-color: #162938;
+    background-color: var(--primary-color);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
     border: none;
     border-radius: 1em;
     cursor: pointer;
     font-size: 1em;
-    color: #fff;
+    color: var(--almost-white);
     font-weight: 500;
   }
   .login-register{
     font-size: .9em;
-    color: #162938;
+    color: var(--text-color);
     text-align: center;
     font-weight: 500;
     margin: 2em 1em;
   }
   .login-register p a{
-    color: #162938;
+    color: var(--text-color);
     text-decoration: none;
     font-weight: 600;
   }
@@ -133,7 +135,7 @@ export default css`
     width: 100%;
     height: 70px;
     border-radius: 5px;
-    background-color: #f2f2f2;
+    background-color: var(--bg-color);
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
     transition: left .5s cubic-bezier(0.075, 0.82, 0.165, 1);
   }
@@ -143,12 +145,14 @@ export default css`
     align-items: center;
     opacity: 1;
     left: 0;
+    z-index: 100;
   }
   .alert-message--active .alert-toast{
     display: grid;
     place-content: center;
     height: 100%;
     font-size: 2em;
+    
   }
   .alert-message--active small{
     display: flex;
@@ -157,5 +161,9 @@ export default css`
   .alert-message--active .close-toast{
     cursor: pointer;
     color: red;
+  }
+  .g-signin2{
+    background-color: red;
+    cursor: pointer;
   }
 `;

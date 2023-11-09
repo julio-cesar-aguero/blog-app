@@ -17,16 +17,16 @@ class BlogApp extends LitElement {
       position: relative;
       width: 100%;
       height: 100%;
-      background-image: url('../assets/background.jpg');
+      background-color: var(--bg-color);
     }
 
     main{
+      background-color: var(--bg-color);
       position: relative;
       z-index: 10;
       width: 100%;
       height: auto;
       min-height: 100vh;
-      padding-top: 100px;
       margin: 0 auto;
       display: flex;
       justify-content: center;
@@ -40,9 +40,15 @@ class BlogApp extends LitElement {
     this.header = 'My app';
     this.isLogged = false;
   }
-
+  connectedCallback() {
+    super.connectedCallback();
+    this._isSessionUserActive();
+  }
   render() {
     return html`
+    
+      
+      
     <navbar-component .logged="${this.isLogged}" .session="${this.sessionUser}" @logout=${this._handleLogOut}></navbar-component>
     <main>
     ${this.isLogged ? html`<home-view .session="${this.sessionUser}"></home-view>` : html`<login-register-component @success="${this._handleSuccess}"></login-register-component>`
@@ -50,16 +56,24 @@ class BlogApp extends LitElement {
     </main>
     `;
   }
-  _handleSuccess(evt) {
-    console.log(evt.detail.sessionUser);
-    if (evt.detail.sessionUser.login === true) {
+  _isSessionUserActive() {
+    if (localStorage.getItem('sessionActive')) {
       this.isLogged = true;
+      this.sessionUser = localStorage.getItem('sessionActive');
+    }
+  }
+  _handleSuccess(evt) {
+    if (evt.detail.sessionUser.login === true) {
+      const session = evt.detail.sessionUser;
+      this.isLogged = true;
+      localStorage.setItem('sessionActive', session);
     }
   }
   _handleLogOut(evt) {
     if (evt.detail.sessionState === 'destroy') {
       this.isLogged = false;
       this.requestUpdate();
+      localStorage.removeItem('sessionActive');
     }
   }
 }

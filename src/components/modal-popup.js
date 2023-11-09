@@ -25,11 +25,12 @@ export class ModalPopup extends LitElement {
             .modal-box{
                 position: relative;
                 border-radius: 10px;
-                width: 500px;
+                max-width: 800px;
+                width: 100%;
                 height: auto;
                 overflow:auto;
                 padding: 1.5em;
-                background-color: #f2f2f2;
+                background-color: var(--bg-color);
                 box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
             }
             .close-option{
@@ -38,7 +39,7 @@ export class ModalPopup extends LitElement {
                 right: 0;
                 display: grid;
                 place-content: center;
-                background-color: #333333;
+                background-color: var(--bg-color);
                 color: white;
                 width: 50px;
                 height: 50px;
@@ -68,16 +69,27 @@ export class ModalPopup extends LitElement {
                 text-align:center;
                 padding: 0.5em 0.3em;
                 margin: 0.5em;
-                width: 100%;
+                
+                width: 90%;
                 border: none;
                 border-radius: 5px;
                 outline: none;
                 font-size: 1.2em;
             }
             .form input:focus,textarea:focus{
-                background-color: #3e3d3de2;
+                background-color: var(--bg-color);
                 color: white;
             }
+            .input__container{
+                display: flex;
+                justify-content: space-between;
+                align-items:center;
+                width: 100%;
+            }
+            .input__icon{
+                font-size: 1.8em;
+            }
+            .topic
              .group-button{
                 width: 100%;
                 padding: 1em;
@@ -95,7 +107,7 @@ export class ModalPopup extends LitElement {
                 cursor: pointer;
              }
              .group-button .btn-primary{
-                background-color: #4582fd;
+                background-color: var(--primary-color);
                 color: white;
             }
             .group-button .btn-primary{
@@ -103,8 +115,11 @@ export class ModalPopup extends LitElement {
                 font-size: 1.5rem;
             }
             .group-button .btn-secondary{
-                background-color: #333333;
+                background-color: var(--almost-black);
                 color: white;
+            }
+            @media (min-width: 768px) {
+                
             }
         `
     ];
@@ -144,8 +159,15 @@ export class ModalPopup extends LitElement {
             <div class="modal-box__form">
                 <h2>Add Topic</h2>
                 <div class="form">
+                <div class="input__container">
+                <ion-icon class="input__icon" name="pencil-outline"></ion-icon>
                 <input type="text" id="topic" .value=${this.form.topic} name="topic" @change="${this._handleChange}" placeholder="Name Topic" required min="5" max="15">
+                </div>
+                <div class="input__container">
+                <ion-icon name="bookmark"></ion-icon>
                 <input type="text" id="title" .value=${this.form.title} name="title" @change="${this._handleChange}" placeholder="Title Topic" required>
+                </div>
+                
                 <textarea type="text" id="title" .value=${this.form.textTopic} name="textTopic" @change="${this._handleChange}" placeholder="Content" required></textarea>
                 <div class="group-button">
                     <button 
@@ -190,10 +212,6 @@ export class ModalPopup extends LitElement {
         this.form = newValues;
         console.log(this.form);
         this._formIsEmpty();
-    }
-    _formIsEmpty() {
-        console.log('entro')
-
     }
 }
 customElements.define('modal-popup', ModalPopup);
