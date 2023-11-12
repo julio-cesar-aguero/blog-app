@@ -14,13 +14,33 @@ export default css`
     margin-bottom: 3rem;
     text-align: center;
 }
+.project__tags{
+    display: flex;
+    justify-content: space-around;
+    margin: 0.2em 0;
+    width: 100%;
+}
+.project__tag{
+    transition: var(--transition);
+    background-color: var(--primary-color);
+    padding: 0.3em 0.6em;
+    margin: 0.6rem;
+    border-radius: var(--border-radius);
+    color: var(--bg-color);
+}
+
 .blog-card-group{
-    
+    display: grid;
+    grid-template-columns: auto;
     margin-bottom: 3rem;
 }
 .blog-card{
+    display: inline-block;
+    max-width: 500px;
+    margin: 1em auto;
+    width: 100%;
+    position: relative;
     padding: 10px;
-    margin-bottom: 1rem;
     border-radius: 10px;
     backdrop-filter: blur(20px);
     box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
@@ -30,7 +50,15 @@ export default css`
     box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 }
 .blog-card-banner{
-    display: none;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto;
+}
+.blog-banner-img{
+    border-radius: 10px;
+    width: 100%;
+    margin: 0 auto;
 }
 .blog-content-wrapper{
      padding: 10px 5px;
@@ -52,6 +80,9 @@ export default css`
     text-decoration: none;
     line-height: 1.4;
     margin-bottom: 1rem;
+}
+.blog-card-banner{
+    
 }
 .blog-text,
 .profile-wrapper{
@@ -93,25 +124,31 @@ aside-component{
     display: none;
 }
 /*Media Querys */
-@media(min-width: 550px){
+@media(min-width: 890px){
     :root{
         --fs-base: 09rem;
     }
     /* blog */
     .blog-card{
+        max-width: unset;
         display: grid;
         grid-template-columns: 3fr 4fr;
-        gap: 20px;
+        gap: 40px;
     }
     .blog-card-banner{
-        display: block;
+        width: 100%;        
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
         overflow: hidden;
         border-radius: 5px;
 
     }
     .blog-banner-img{
+        display: block;
+        border-radius: 5px;
+        max-width: 500px;
         width: 100%;
-        height: 100%;
         object-fit: cover;
     }
     .blog-text

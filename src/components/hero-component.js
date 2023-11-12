@@ -120,8 +120,8 @@ export class HeroComponent extends LitElement {
                                 detail: { modalState },
                             })
                         )
-                    }}">Add Topic</a>
-                        <a href="javascript:alert(document.domain)" class="btn btn-secondary">View Topics</a>
+                    }}">Nueva entrada</a>
+                        <a href="javascript:alert(document.domain)" class="btn btn-secondary">Entradas</a>
                     </div>
                 </div>
                 <div class="right">
@@ -134,5 +134,8 @@ export class HeroComponent extends LitElement {
         </div>
         `;
     }
+
+   
+    
 }
 customElements.define('hero-component', HeroComponent);

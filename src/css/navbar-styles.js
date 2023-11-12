@@ -15,13 +15,14 @@ export default css`
     justify-content: space-between;
   }
   .nav__img{
-    margin-top: 30px;
-    width: 100px;
+    width: 70px;
     border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 20px 30px;
+    color: var(--text-color)
   }
   .nav__hamburger {
     position: absolute;
-    top: 0;
+    top: 15%;
     right: 5%;
     width: 30px;
     height: 50px;
@@ -30,7 +31,8 @@ export default css`
     background-position: center;
     cursor: pointer;
     z-index: 100;
-    transition: background-image 0.3s;
+    color: var(--text-color);
+    transition: background 0.3s;
   }
   .nav__hamburger--open {
     background-image: url("../../assets/images/icon-close-menu.svg");
@@ -104,6 +106,32 @@ export default css`
     text-decoration: none;
     color: var(--text-color);
   }
+  .switches{
+    width: 100px;
+    top: 5%;
+    left: 5%;
+    position: absolute;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;  
+  }
+  .toggle-theme{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.toggle-theme__icon{
+    width: 20px;
+    
+}
+.toggle-theme__text{
+    margin-left: 5px;
+    font-size: 0.7em;
+    color: var(--primary-color);
+}
   .nav__login {
     width: 80%;
     margin: 0 auto;
@@ -112,7 +140,7 @@ export default css`
   .nav__login--border {
     border-radius: 1em;
     margin-top: 20px;
-    border: 1px solid var(--medium-gray);
+    border: 1px solid var(--text-color);
   }
   .nav__user{
     position: relative;
@@ -141,6 +169,11 @@ export default css`
     .nav--white{
       background-color: var(--bg-color);
       transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    }
+    .nav__img{
+      margin-top: 20px;
+      width: 90px;
+      border-radius: 50%;
     }
     .nav__hamburger {
       display: none;
@@ -185,7 +218,7 @@ export default css`
       width: max-content;
       height: auto;
       padding: 2em;
-      background-color: var(--bg-color);
+      background-color: var(--bg-card-color);
       z-index: 1000;
       border-radius: 10px;
       box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
@@ -198,13 +231,9 @@ export default css`
       pointer-events: unset;
     }
     .switches{
+      position: unset;
       width: 100%;
-      display: flex;
-      align-items: center;
       justify-content: flex-end;  
-      
-  
-      
   }
   .toggle-theme{
       display: flex;

@@ -15,9 +15,8 @@ class BlogApp extends LitElement {
 
     :host{
       position: relative;
-      width: 100%;
-      height: 100%;
       background-color: var(--bg-color);
+      overflow-y: hidden;
     }
 
     main{
@@ -44,6 +43,7 @@ class BlogApp extends LitElement {
     super.connectedCallback();
     this._isSessionUserActive();
   }
+ 
   render() {
     return html`
     
@@ -58,15 +58,17 @@ class BlogApp extends LitElement {
   }
   _isSessionUserActive() {
     if (localStorage.getItem('sessionActive')) {
+      const session = JSON.parse(localStorage.getItem('sessionActive'));
       this.isLogged = true;
-      this.sessionUser = localStorage.getItem('sessionActive');
+      this.sessionUser = session;
+      this.sessionUser = { ...this.sessionUser }
     }
   }
   _handleSuccess(evt) {
     if (evt.detail.sessionUser.login === true) {
       const session = evt.detail.sessionUser;
       this.isLogged = true;
-      localStorage.setItem('sessionActive', session);
+      localStorage.setItem('sessionActive', JSON.stringify(session));
     }
   }
   _handleLogOut(evt) {

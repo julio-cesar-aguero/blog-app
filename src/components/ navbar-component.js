@@ -1,7 +1,6 @@
 import { LitElement, html, css } from "lit";
 import styles from "../css/navbar-styles";
 import { Features } from "../constants/index";
-import './user-component';
 
 export class NavbarComponent extends LitElement {
   static get styles() {
@@ -12,9 +11,10 @@ export class NavbarComponent extends LitElement {
       isOpen: { type: Boolean },
       currentDropdown: { type: String },
       logged: { type: Boolean },
-      toggleTheme: { type: String},
-      toggleIcon: { type: String},
-      toggleText: { type: String},
+      toggleTheme: { type: String },
+      toggleIcon: { type: String },
+      toggleText: { type: String },
+      session: { type: Object },
     };
   }
 
@@ -25,16 +25,16 @@ export class NavbarComponent extends LitElement {
   }
 
   firstUpdated() {
-    this.toggleTheme = this.shadowRoot.getElementById('toggle-theme');
-    this.toggleIcon = this.shadowRoot.getElementById('toggle-icon');
-    this.toggleText = this.shadowRoot.getElementById('toggle-text');
+    this.toggleTheme = this.shadowRoot.getElementById("toggle-theme");
+    this.toggleIcon = this.shadowRoot.getElementById("toggle-icon");
+    this.toggleText = this.shadowRoot.getElementById("toggle-text");
     this.currentDropdown = this.shadowRoot.getElementById("nav-overlay");
     this._resize();
   }
   render() {
     return html`
       <div class="container">
-        <nav class="${this.logged ? 'nav':'nav nav--white'}">
+        <nav class="${this.logged ? "nav" : "nav nav--white"}">
           <img
             class="nav__img"
             src="../../assets/logo-black.svg"
@@ -42,16 +42,15 @@ export class NavbarComponent extends LitElement {
           />
           <div
             class=${this.isOpen
-        ? "nav__hamburger nav__hamburger--open"
-        : "nav__hamburger"}
+              ? "nav__hamburger nav__hamburger--open"
+              : "nav__hamburger"}
             @click="${this._openCloseMenu}"
           ></div>
-
           <div
             id="nav-overlay"
             class="${this.isOpen
-        ? "nav__overlay"
-        : "nav__overlay nav__overlay--close"}"
+              ? "nav__overlay"
+              : "nav__overlay nav__overlay--close"}"
             @click="${this._option}"
           >
             <ul class="nav__menu">
@@ -62,7 +61,7 @@ export class NavbarComponent extends LitElement {
                 </span>
                 <ul class="nav__inner">
                   ${Features.map(
-          (Link) => html`
+                    (Link) => html`
                       <li class="nav__dropdown">
                         <a href="" class="nav__link">
                           <img
@@ -73,10 +72,9 @@ export class NavbarComponent extends LitElement {
                         </a>
                       </li>
                     `
-        )}
+                  )}
                 </ul>
               </li>
-
               <li class="nav__item">
                 <span class="nav__parent">
                   Company
@@ -86,7 +84,6 @@ export class NavbarComponent extends LitElement {
                     class="nav__arrow"
                   />
                 </span>
-
                 <ul class="nav__inner">
                   <li class="nav__dropdown">
                     <a href="" class="nav__link">History</a>
@@ -99,58 +96,67 @@ export class NavbarComponent extends LitElement {
                   </li>
                 </ul>
               </li>
-
               <li class="nav__item">
                 <a href="" class="nav__link">Careers</a>
               </li>
-
               <li class="nav__item">
                 <a href="" class="nav__link">About</a>
               </li>
               <div class="switches">
-        <div id="toggle-theme" class="toggle-theme" @click="${this._changeTheme}">
-          <img id="toggle-icon" class="toggle-theme__icon" src="../../assets/moon.svg" alt="icon toggle theme">
-          <p id="toggle-text" class="toggle-theme__text">Dark Mode</p>
-        </div>
-      </div>
-
-              ${this.logged ? html`
-              <div class="nav__user">
-              <li class="nav__item nav__item-user">
-                <span class="nav__parent">
-                <ion-icon name="person"></ion-icon>
-                  User
+                <div
+                  id="toggle-theme"
+                  class="toggle-theme"
+                  @click="${this._changeTheme}"
+                >
                   <img
-                    src="../../assets/images/icon-arrow-down.svg"
-                    alt=""
-                    class="nav__arrow"
+                    id="toggle-icon"
+                    class="toggle-theme__icon"
+                    src="../../assets/moon.svg"
+                    alt="icon toggle theme"
                   />
-                </span>
-
-                <ul class="nav__inner nav__inner-user">
-                  <li class="nav__dropdown">
-                    <ion-icon name="person"></ion-icon>
-                    <a href="" class="nav__link">Me</a>
-                  </li>
-                  <li class="nav__dropdown">
-                    <ion-icon name="exit"></ion-icon>
-                    <a href="" class="nav__link" @click="${this._logOut}">Log Out</a>
-                  </li>
-                </ul>
-              </li>
-
+                  <p id="toggle-text" class="toggle-theme__text">Dark Mode</p>
+                </div>
               </div>
-              ` : html`<div class="nav__user">
-                <li class="nav__login">
-                  <a href="" class="nav__sign">Login</a>
-                </li>
-                <li class="nav__login nav__login--border">
-                  <a href="" class="nav__sign">Register</a>
-                </li>
-                </div>`
-      }
-              
-              
+              ${this.logged
+                ? html`
+                    <div class="nav__user">
+                      <li class="nav__item nav__item-user">
+                        <span class="nav__parent">
+                          <ion-icon name="person"></ion-icon>
+                          User
+                          <img
+                            src="../../assets/images/icon-arrow-down.svg"
+                            alt=""
+                            class="nav__arrow"
+                          />
+                        </span>
+
+                        <ul class="nav__inner nav__inner-user">
+                          <li class="nav__dropdown">
+                            <ion-icon name="person"></ion-icon>
+                            <a href="" class="nav__link">Me</a>
+                          </li>
+                          <li class="nav__dropdown">
+                            <ion-icon name="exit"></ion-icon>
+                            <a
+                              href=""
+                              class="nav__link"
+                              @click="${this._logOut}"
+                              >Log Out</a
+                            >
+                          </li>
+                        </ul>
+                      </li>
+                    </div>
+                  `
+                : html`<div class="nav__user">
+                    <li class="nav__login">
+                      <a href="" class="nav__sign">Login</a>
+                    </li>
+                    <li class="nav__login nav__login--border">
+                      <a href="" class="nav__sign">Register</a>
+                    </li>
+                  </div>`}
             </ul>
           </div>
         </nav>
@@ -158,13 +164,13 @@ export class NavbarComponent extends LitElement {
     `;
   }
   _logOut() {
-    const sessionState = 'destroy'
+    const sessionState = "destroy";
     this.dispatchEvent(
       new CustomEvent("logout", {
         bubbles: true,
         detail: { sessionState },
       })
-    )
+    );
   }
   _openCloseMenu(e) {
     e.preventDefault();
@@ -191,15 +197,14 @@ export class NavbarComponent extends LitElement {
     menu.classList.toggle("nav__inner--show");
     this.currentDropdown = menu;
   }
-  _changeTheme(e){
-    document.body.classList.toggle('dark');
-    if(this.toggleIcon.src.includes('moon.svg')){
-      this.toggleIcon.src='../../assets/sun.svg';
-      this.toggleText.textContent='Light Mode';
-    }
-    else{
-      this.toggleIcon.src='../../assets/moon.svg';
-      this.toggleText.textContent='Dark Mode';
+  _changeTheme(e) {
+    document.body.classList.toggle("dark");
+    if (this.toggleIcon.src.includes("moon.svg")) {
+      this.toggleIcon.src = "../../assets/sun.svg";
+      this.toggleText.textContent = "Light Mode";
+    } else {
+      this.toggleIcon.src = "../../assets/moon.svg";
+      this.toggleText.textContent = "Dark Mode";
     }
   }
   _closeDropdown() {
