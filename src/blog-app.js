@@ -65,7 +65,10 @@ class BlogApp extends LitElement {
     }
   }
   _handleSuccess(evt) {
-    if (evt.detail.sessionUser.login === true) {
+    
+    console.log("session user++",evt.detail.sessionUser.data.token);
+    console.log(localStorage.getItem('token'))
+    if (evt.detail.sessionUser.data.token === localStorage.getItem('token')) {
       const session = evt.detail.sessionUser;
       this.isLogged = true;
       localStorage.setItem('sessionActive', JSON.stringify(session));
@@ -75,6 +78,7 @@ class BlogApp extends LitElement {
     if (evt.detail.sessionState === 'destroy') {
       this.isLogged = false;
       this.requestUpdate();
+      localStorage.removeItem('token');
       localStorage.removeItem('sessionActive');
     }
   }

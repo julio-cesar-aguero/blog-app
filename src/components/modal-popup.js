@@ -19,7 +19,7 @@ export class ModalPopup extends LitElement {
     super();
     this.form = {
       title: "",
-      autor: "",
+      autor: "julio aguero",
       tags: [],
       textTopic: "",
       imgUri: "",
@@ -38,7 +38,7 @@ export class ModalPopup extends LitElement {
     this.imgPreview = this.shadowRoot.getElementById("img-prev");
   }
   firstUpdated() {
-    this.form.autor = this.sessionUser.dataUser.name;
+    //this.form.autor = this.sessionUser.dataUser.name;
   }
   render() {
     return html`
@@ -224,6 +224,7 @@ export class ModalPopup extends LitElement {
     if (isValid) {
       const data = this.form;
       const modalState = false;
+      console.log("data enviar form", data);
       this.dispatchEvent(
         new CustomEvent("getForm", {
           bubbles: true,
@@ -240,9 +241,10 @@ export class ModalPopup extends LitElement {
         var file = reader.result;
         this.imgPreview = file;
         img.innerHTML = '<img src="' + file + '" />';
-        alert(this.imgPreview);
       };
       reader.readAsDataURL(evt.target.files[0]);
+      this.imgPreview = evt.target.files[0];
+      this.form.imgUri = evt.target.files[0];
     }
   }
   _handleAddTag(evt) {

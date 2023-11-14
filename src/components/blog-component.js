@@ -1,10 +1,22 @@
 import { LitElement, html, css } from "lit";
 import "./aside-component";
 import styles from "../css/blog-styles";
-import { entradas } from "../data/entradas";
 export class BlogComponent extends LitElement {
+  static get properties() {
+    return {
+      entradas: { type: Object},
+    };
+  }
   static get styles() {
     return [styles];
+  }
+  constructor(){
+  super();
+  this.entradas = {}
+  }
+  firstUpdated(){
+    this.entradas = {...this.entradas[0]};
+    console.log("entradas",this.entradas)
   }
   render() {
     return html`
@@ -12,13 +24,13 @@ export class BlogComponent extends LitElement {
         <div id="blog" class="blog">
           <h2 class="h2">Lastest Blog Post</h2>
           <div class="blog-card-group">
-            ${entradas.map(
+            ${this.entradas.map(
               (entrada) =>
                 html`
                   <div class="blog-card">
                     <div class="blog-card-banner">
                       <img
-                        src="${entrada.imgUri}"
+                        src="http://localhost:3000/api/${entrada.folderFile}/${entrada.imgUri}"
                         alt=""
                         class="blog-banner-img"
                       />

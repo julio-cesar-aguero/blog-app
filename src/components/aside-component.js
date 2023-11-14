@@ -1,16 +1,16 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css } from "lit";
 
 export class AsideComponent extends LitElement {
-    static styles = [
-        css`
-            :host {
-                display: block;
-            }
-        `
-    ];
+  static styles = [
+    css`
+      :host {
+        display: block;
+      }
+    `,
+  ];
 
-    render() {
-        return html`
+  render() {
+    return html`
         <div class="aside">
             <div class="topics">
                 <h2 class="h2">Topics</h2>
@@ -46,6 +46,6 @@ export class AsideComponent extends LitElement {
             </div>
         </div>
         `;
-    }
+  }
 }
-customElements.define('aside-component', AsideComponent);
+customElements.define("aside-component", AsideComponent);

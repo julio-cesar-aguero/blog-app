@@ -2,7 +2,7 @@ import { LitElement, html, css } from "lit";
 import styles from "../css/login-styles";
 import "./login-component";
 import "./register-component";
-import { users } from "../data/index"
+import { users } from "../data/index";
 
 export class LoginRegisterComponent extends LitElement {
   static styles = [styles];
@@ -24,32 +24,31 @@ export class LoginRegisterComponent extends LitElement {
     return html`
       <div class="wrapper">
         ${this.view
-        ? html`<login-component
+          ? html`<login-component
               .alertToast="${this.alert}"
               @sign="${this._login}"
               @changeV=${this._changeComponent}
             ></login-component>`
-        : html`<register-component
+          : html`<register-component
               @changeV=${this._changeComponent}
             ></register-component>`}
       </div>
     `;
   }
-  _login(e) {
+  async _login(e) {
     const data = e.detail.data;
     const { email, password } = data;
+    const userPrev = {
+      email: email,
+      password: password,
+    };
+    console.log("usuario a enviar al servidor", userPrev);
     try {
       if (!this._validateData(email, password)) {
-        throw new Error('email o password vacios');
+        throw new Error("email o password vacios");
       }
-      const user = this._findUser(email, password);
-      if (user === false){
-        throw new Error('usuario no encontrado');
-      }
-      const sessionUser = {
-        dataUser: user,
-        login: true
-      } 
+      const sessionUser = await this._getSession(userPrev);
+      console.log("session", sessionUser);
       this.dispatchEvent(
         new CustomEvent("success", {
           detail: { sessionUser },
@@ -66,6 +65,26 @@ export class LoginRegisterComponent extends LitElement {
       this.requestUpdate();
     }
   }
+  async _getSession(user) {
+    const res = await fetch("http://77.243.85.199/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+    const resDB = await res.json();
+    localStorage.setItem("token", resDB.data.token);
+    try {
+      if (!resDB) {
+        throw new error("No hay respuesta del servidor");
+      }
+      console.log("respuesta", resDB);
+      return resDB;
+    } catch (error) {
+      console.log("Error", error.message);
+    }
+  }
   _validateData(email, password) {
     if (!!email && !!password) {
       return true;
@@ -73,19 +92,17 @@ export class LoginRegisterComponent extends LitElement {
     return false;
   }
   _findUser(email, password) {
-      let result = users.find((user) => user.email === email);
-      if (!result) {
-        return false;
-      }
-      if(result.password === password){
-        return result;
-      }else{
-        return false;
-      }
+    let result = users.find((user) => user.email === email);
+    if (!result) {
+      return false;
+    }
+    if (result.password === password) {
+      return result;
+    } else {
+      return false;
+    }
   }
-  _validateUser(email, password) {
-
-  }
+  _validateUser(email, password) {}
   _resetAlert() {
     this.alert = {};
   }
