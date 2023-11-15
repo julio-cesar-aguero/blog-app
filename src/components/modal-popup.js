@@ -28,9 +28,6 @@ export class ModalPopup extends LitElement {
     this.tagDelete = "";
     this.imgPreview = "";
     this.alertToast = {
-      state: true,
-      message: "Complete el formulario",
-      color: "green",
     };
   }
   connectedCallback() {
@@ -244,7 +241,7 @@ export class ModalPopup extends LitElement {
       };
       reader.readAsDataURL(evt.target.files[0]);
       this.imgPreview = evt.target.files[0];
-      this.form.imgUri = evt.target.files[0];
+      this.form.imgUri = evt.target.files;
     }
   }
   _handleAddTag(evt) {

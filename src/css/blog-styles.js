@@ -43,9 +43,11 @@ export default css`
     padding: 10px;
     border-radius: 10px;
     backdrop-filter: blur(20px);
+    
     box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 }
 .blog-card:hover{
+    transform: scale(1.2);
     transform: translateY(-2px);
     box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 }
@@ -59,6 +61,30 @@ export default css`
     border-radius: 10px;
     width: 100%;
     margin: 0 auto;
+}
+.group-button__actions{
+    position: absolute;
+    top: 5%;
+    left: 2%;
+    width: 100%;
+}
+.group-button__actions .btn__action{
+    width: 50px;
+    border-radius: 50%;
+    border: 5px solid var(--primary-color);
+}
+.group-button__actions .btn__action{
+    margin: 0 0.5em;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+    transform: scale(1.1);
+    opacity: 0.9;
+    cursor: pointer;
+    transition: all .5s cubic-bezier();
+}
+.group-button__actions .btn__action:hover{
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
 }
 .blog-content-wrapper{
      padding: 10px 5px;

@@ -15,8 +15,7 @@ export class BlogComponent extends LitElement {
   this.entradas = {}
   }
   firstUpdated(){
-    this.entradas = {...this.entradas[0]};
-    console.log("entradas",this.entradas)
+    console.log("entradas",this.entradas[0].folderfile)
   }
   render() {
     return html`
@@ -29,8 +28,12 @@ export class BlogComponent extends LitElement {
                 html`
                   <div class="blog-card">
                     <div class="blog-card-banner">
+                    <div class="group-button__actions">
+                      <img id="${entrada._id}" src="../../assets/edit.png" @click="${this._handleEditEntrada}" class="btn__action btn__warning">
+                      <img id="${entrada._id}" src="../../assets/delete.png" @click="${this._handleDeleteEntrada}" class="btn__action btn__alert">
+                    </div>
                       <img
-                        src="http://localhost:3000/api/${entrada.folderFile}/${entrada.imgUri}"
+                        src="http://77.243.85.199/images/entradas/${entrada.imgUri}"
                         alt=""
                         class="blog-banner-img"
                       />
@@ -69,6 +72,24 @@ export class BlogComponent extends LitElement {
         <aside-component></aside-component>
       </div>
     `;
+  }
+  _handleDeleteEntrada(evt){
+    console.log("id a eliminar",evt.target.id);
+    const id = evt.target.id
+    this.dispatchEvent(
+      new CustomEvent("delete-data", {
+        bubbles: true,
+        detail: { id },
+      })
+    );
+  }
+  _handleEditEntrada(){
+    this.dispatchEvent(
+      new CustomEvent("edit-data", {
+        bubbles: true,
+        detail: { data, modalState },
+      })
+    );
   }
 }
 customElements.define("blog-component", BlogComponent);
