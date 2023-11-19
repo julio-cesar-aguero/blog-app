@@ -13,6 +13,7 @@ export class ModalPopup extends LitElement {
       imgPreview: { type: Array },
       alertToast: { type: Object },
       sessionUser: { type: Object },
+      originalForm: { type: Object },
     };
   }
   constructor() {
@@ -23,24 +24,28 @@ export class ModalPopup extends LitElement {
       tags: [],
       textTopic: "",
       imgUri: "",
+      update: false,
     };
     this.tag = "";
     this.tagDelete = "";
     this.imgPreview = "";
-    this.alertToast = {
-    };
+    this.alertToast = {};
   }
   connectedCallback() {
     super.connectedCallback();
     this.imgPreview = this.shadowRoot.getElementById("img-prev");
   }
   firstUpdated() {
-    //this.form.autor = this.sessionUser.dataUser.name;
+    this.load();
   }
   render() {
     return html`
       <div class="overlay">
-        <div class="modal-box">
+        <div
+          class="${this.form.update
+            ? "modal-box modal-box-update"
+            : "modal-box"}"
+        >
           <div
             class="close-option"
             @click="${() => {
@@ -56,9 +61,11 @@ export class ModalPopup extends LitElement {
             <ion-icon name="close-outline"></ion-icon>
           </div>
           <div class="modal-box__form">
-            <h2>Add Topic</h2>
+            ${this.form.update
+              ? html`<h2>Actualizar entrada.</h2>`
+              : html`<h2>Nueva entrada.</h2>`}
             <div
-              style="border-top: 10px solid ${this.alertToast.color}"
+              style="border-top: 20px solid ${this.alertToast.color}"
               class="${this.alertToast.state
                 ? " alert-message alert-message--active"
                 : "alert-message"}"
@@ -74,10 +81,10 @@ export class ModalPopup extends LitElement {
                 <ion-icon name="close"></ion-icon>
               </span>
             </div>
-            <div class="form">
+            <div class="${this.form.update ? "form form-update" : "form"}">
               <div class="blog__information">
                 <div class="input__container">
-                  <h2>Titulo</h2>
+                  <h3>1. titulo</h3>
                   <input
                     type="text"
                     id="title"
@@ -89,7 +96,7 @@ export class ModalPopup extends LitElement {
                   />
                 </div>
                 <div class="tag-input">
-                  <h2>Tags</h2>
+                  <h3>2. tags</h3>
                   <div class="form__tag">
                     <div class="input-wrap">
                       <ion-icon name="pricetag"></ion-icon>
@@ -123,7 +130,7 @@ export class ModalPopup extends LitElement {
               </div>
               <div class="right">
                 <div class="text-area__container">
-                  <span><b>Descripción</b></span>
+                  <h3>3. descripción</h3>
                   <textarea
                     type="text"
                     id="title"
@@ -135,7 +142,7 @@ export class ModalPopup extends LitElement {
                   ></textarea>
                 </div>
                 <div class="img-container-blog">
-                  <span><b>Elije una imagen</b></span>
+                  <h3>4. elije una imagen</h3>
 
                   <div class="img-blog__container">
                     <div id="img-prev" class="img-prev"></div>
@@ -155,12 +162,20 @@ export class ModalPopup extends LitElement {
               </div>
 
               <div class="group-button">
-                <button
-                  class="btn btn-primary"
-                  @click="${this._handleAddEntry}"
-                >
-                  <ion-icon name="add-circle"></ion-icon>
-                </button>
+                ${this.form.update
+                  ? html`<button
+                  @click="${this._handleEdit}"
+                  class="btn btn-update"
+                  >
+                  Actualizar
+                  </button>`
+                  : html`<button
+                      class="btn btn-primary"
+                      @click="${this._handleAddEntry}"
+                    >
+                      <ion-icon name="add-circle"></ion-icon>
+                    </button>`}
+
                 <button
                   class="btn btn-secondary"
                   @click="${() => {
@@ -182,11 +197,28 @@ export class ModalPopup extends LitElement {
       </div>
     `;
   }
-  _closeToast() {
-    this.alertToast.state = false;
-    this.alertToast = { ...this.alertToast };
+  load() {
+    if (this.form.update) {
+      console.log("vista actualizar");
+      const img = this.shadowRoot.getElementById("img-prev");
+      img.innerHTML =
+        '<img src="http://77.243.85.199/images/entradas/' +
+        this.form.imgUri +
+        '" />';
+        this.originalForm = {...this.form}
+    }
+
   }
   _validateForm() {
+    if(this.originalForm === this.form){
+      this.alertToast = {
+        state: true,
+        message: "Agregue una descripción !",
+        color: "orange",
+      };
+      this.alert = { ...this.alert };
+      return false;
+    }
     if (!this.form.title) {
       this.alertToast = {
         state: true,
@@ -214,14 +246,27 @@ export class ModalPopup extends LitElement {
       this.alert = { ...this.alert };
       return false;
     }
+    
     return true;
+  }
+  _handleEdit(){
+    const isValid = this._validateForm();
+    if(isValid){
+      const data = this.form;
+      const modalState = false;
+      this.dispatchEvent(
+        new CustomEvent("editForm",{
+          bubbles: true,
+          detail: { data, modalState }
+        })
+      );
+    }
   }
   _handleAddEntry() {
     const isValid = this._validateForm();
     if (isValid) {
       const data = this.form;
       const modalState = false;
-      console.log("data enviar form", data);
       this.dispatchEvent(
         new CustomEvent("getForm", {
           bubbles: true,

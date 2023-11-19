@@ -35,6 +35,7 @@ export default css`
     margin-bottom: 3rem;
 }
 .blog-card{
+    position: relative;
     display: inline-block;
     max-width: 500px;
     margin: 1em auto;
@@ -43,8 +44,8 @@ export default css`
     padding: 10px;
     border-radius: 10px;
     backdrop-filter: blur(20px);
-    
     box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    transition: all 7s cubic-bezier();
 }
 .blog-card:hover{
     transform: scale(1.2);
@@ -126,7 +127,7 @@ export default css`
     font-weight: 900;
     text-decoration: none;
     color: var(--text-color);
-    transition: color .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    transition: color .5s cubic-bezier(0.075, 0.82, 0.165, 1) !important;
 
 }
 .blog .wrapper .h4:hover{

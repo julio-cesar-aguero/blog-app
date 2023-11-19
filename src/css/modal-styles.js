@@ -22,7 +22,7 @@ export default css`
     z-index: 100;
   }
   .modal-box {
-    border-top: 10px solid var(--primary-color);
+    border-top: 20px solid var(--primary-color);
     position: relative;
     border-radius: 10px;
     max-width: 900px;
@@ -34,18 +34,26 @@ export default css`
     box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
     z-index: 200;
   }
+  .modal-box-update{
+    border-top: 20px solid var(--third-color) !important;
+  }
   .close-option {
     position: absolute;
     top: 0;
     right: 0;
     display: grid;
     place-content: center;
-    background-color: var(--bg-color);
-    color: white;
+    background-color: var(--bg-card-color);
+    color: var(--text-color);
     width: 50px;
     height: 50px;
-    border-radius: 0 10px 0;
     cursor: pointer;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+  }
+  .close-option ion-icon{
+    font-weight: 800;
+    font-size: 2.2em;
+    color: var(text-color);
   }
   .modal-box__form h2 {
     text-align: center;
@@ -59,6 +67,19 @@ export default css`
     justify-content: center;
     align-items: center;
   }
+  .form-update{
+    background-color: var(--bg-color);
+  }
+  .form-update input {
+    background-color: var(--bg-card-color);
+  }
+   .form-update h3{
+    color: var(--third-color);
+    font-weight: 800;
+  }
+  .form-update .tag{
+    background-color: var(--third-color) !important;
+  }
   .form input {
     height: 25px;
     text-align: center;
@@ -68,14 +89,17 @@ export default css`
     border: none;
     border-radius: 5px;
     outline: none;
-    font-size: 0.8em;
-    background-color: var(--bg-color);
+    font-weight: 800;
+    font-size: 0.9em;
+    color: var(--text-color);
+    background-color: var(--bg-card-color);
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
   }
   .form input:focus,
   textarea:focus {
     background-color: var(--bg-card-color);
     color: var(--text-color);
-    border: 3px solid var(--primary-color);
+    border: 1px solid var(--text-color);
   }
   .blog__information {
     position: relative;
@@ -97,6 +121,10 @@ export default css`
     width: 100%;
     border-radius: 5px;
   }
+  .input__container h3{
+    width: 100%;
+    text-align: left;
+  }
   .right {
     background-color: var(--bg-card-color);
     box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
@@ -116,14 +144,24 @@ export default css`
     width: 100%;
   }
   .text-area__container textarea {
-    width: 100%;
+    text-align: center;
+    padding: 0.9 1.2;
+    margin: 0.3em auto;
+    font-size: 1.4em;
+    font-weight: 800;
+    width: 90%;
     height: auto;
     min-height: 300px;
     border: none;
     border-radius: 10px;
     resize: none;
     outline: none;
-    background-color: var(--bg-color);
+    color: var(--text-color);
+    background-color: var(--bg-card-color);
+    box-shadow: var(--bg-color) 0px 0px 0px 1px;
+  }
+  .text-area__container textarea:focus {
+    border: 1px solid var(--text-color);
   }
   .group-button {
     width: 100%;
@@ -150,6 +188,11 @@ export default css`
       rgba(0, 0, 0, 0.22) 0px 15px 12px;
     color: white;
   }
+  .group-button .btn-update {
+    background-color: var(--third-color);
+    color: white;
+  }
+
   .group-button .btn-primary {
     padding: 0.5em;
     font-size: 1.5rem;
@@ -230,7 +273,7 @@ export default css`
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
   }
   .img-blog__container img {
@@ -324,7 +367,10 @@ export default css`
     }
     .right {
       position: relative;
-      width: 50%;
+      width: 45%;
+      padding: 0.5em;
+      margin: 0 auto;
+     
     }
     .text-area__container {
       width: 100%;
@@ -339,6 +385,9 @@ export default css`
       height: auto;
       max-height: 150px;
       overflow: scroll;
+    }
+    .img-container-blog{
+      width: 100%;
     }
     .img-blog__container {
       width: 100%;

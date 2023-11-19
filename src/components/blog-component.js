@@ -14,9 +14,6 @@ export class BlogComponent extends LitElement {
   super();
   this.entradas = {}
   }
-  firstUpdated(){
-    console.log("entradas",this.entradas[0].folderfile)
-  }
   render() {
     return html`
       <div class="container">
@@ -83,11 +80,14 @@ export class BlogComponent extends LitElement {
       })
     );
   }
-  _handleEditEntrada(){
+  _handleEditEntrada(evt){
+    console.log("id a editar",evt.target.id);
+    const id = evt.target.id
+    const modalState = true;
     this.dispatchEvent(
       new CustomEvent("edit-data", {
         bubbles: true,
-        detail: { data, modalState },
+        detail: { id, modalState },
       })
     );
   }
