@@ -40,10 +40,11 @@ class BlogApp extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     this._isSessionUserActive();
+    //this._handleSuccessGoogle();
   }
   firstUpdated(){
     super.firstUpdated();
-    this._handleSuccessGoogle();
+    //this._handleSuccessGoogle();
   }
   render() {
     return html`
@@ -80,8 +81,10 @@ class BlogApp extends LitElement {
       Router.go({ pathname: "/home" });
     }
   }
-  async _handleSuccessGoogle(){
-    const res = await fetch("http://localhost:3000/api/login/success", {
+  async _handleSuccessGoogle(evt){
+    evt.preventDefault();
+    console.log("abriendo puerta",evt.detail);
+    /*const res = await fetch("http://localhost:3000/api/login/success", {
       method: "GET",
       credentials: 'include',
       headers: {
@@ -89,8 +92,9 @@ class BlogApp extends LitElement {
       },
     });
     const resDB = await res.json();
-    if (resDB.success === true) {
-      const session = resDB.user;
+    */
+    if (evt.detail.message === 'success') {
+      const session = evt.detail.message;
       this.isLogged = true;
       localStorage.setItem("sessionActive", JSON.stringify(session));
       Router.go({ pathname: "/home" });
@@ -102,6 +106,7 @@ class BlogApp extends LitElement {
       this.requestUpdate();
       localStorage.removeItem("token");
       localStorage.removeItem("sessionActive");
+      window.open("http://localhost:3000/api/logout", "_self")
       Router.go({ pathname: "/login" });
     }
   }

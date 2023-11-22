@@ -91,9 +91,9 @@ export class LoginComponent extends LitElement {
             </button>
           </div>
           <div id="signInButton">
-            <facebook-login
-              @successFacebook="${this.onSignIn}"
-            ></facebook-login>
+            <button @click="${this.loginFacebook}">
+              Iniciar Sesión con Facebook
+            </button>
           </div>
           <div class="login-register">
             <p>
@@ -118,13 +118,25 @@ export class LoginComponent extends LitElement {
       </div>
     `;
   }
- 
-  loginGoogle(e){
+
+  loginGoogle(e) {
     e.preventDefault();
-    const social = 'google'
+    const social = "google";
     console.log(social);
     this.dispatchEvent(
       new CustomEvent("signGoogle", {
+        detail: { data: social },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
+  loginFacebook(e) {
+    e.preventDefault();
+    const social = "facebook";
+    console.log(social);
+    this.dispatchEvent(
+      new CustomEvent("signFacebook", {
         detail: { data: social },
         bubbles: true,
         composed: true,

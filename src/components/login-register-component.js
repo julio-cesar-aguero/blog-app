@@ -43,6 +43,7 @@ connectedCallback() {
               .alertToast="${this.alert}"
               @sign="${this._login}"
               @signGoogle="${this.methodX}"
+              @signFacebook="${this.methodFacebook}"
               @changeV=${this._changeComponent}
             ></login-component>`
           : html`<register-component
@@ -63,7 +64,26 @@ connectedCallback() {
     });
     const resDB = await res.json();
     console.log(resDB);
+    const message = "success"
+    this.dispatchEvent(
+      new CustomEvent("successGoogle", {
+        detail: { message },
+        bubbles: true,
+        composed: true,
+      })
+    );
     
+  }
+  async methodFacebook(){
+    window.open("http://localhost:3000/api/facebook", "_self")
+    /*const res = await fetch("http://localhost:3000/api/login/success", {
+      method: "GET",
+      credentials: 'include',
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const resDB = await res.json();*/
   }
   async _login(e) {
     const data = e.detail.data;

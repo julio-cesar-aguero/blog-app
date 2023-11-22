@@ -202,7 +202,7 @@ export class ModalPopup extends LitElement {
       console.log("vista actualizar");
       const img = this.shadowRoot.getElementById("img-prev");
       img.innerHTML =
-        '<img src="http://77.243.85.199/images/entradas/' +
+        '<img src="http://localhost:3000/images/entradas/' +
         this.form.imgUri +
         '" />';
         this.originalForm = {...this.form}
