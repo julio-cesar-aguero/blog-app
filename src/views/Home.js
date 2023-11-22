@@ -1,8 +1,10 @@
 import { LitElement, html, css } from "lit";
+
 import  styles  from '../css/home-styles';
 import "../components/hero-component";
 import "../components/blog-component";
 import "../components/aside-component";
+import { Router } from '@vaadin/router';
 
 export class Home extends LitElement {
   static get properties() {
@@ -106,7 +108,7 @@ export class Home extends LitElement {
     this.alert = { ...this.alert };
   }
   async _getData() {
-    const res = await fetch("http://77.243.85.199/api/userBlog/", {
+    const res = await fetch("http://localhost:3000/api/userBlog/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -136,12 +138,11 @@ export class Home extends LitElement {
       redirect: "manual",
     };
     const res = await fetch(
-      "http://77.243.85.199/api/userBlog/nueva-entrada/",
+      "http://localhost:3000/api/userBlog/nueva-entrada/",
       requestOptions
     );
     const resDB = await res.json();
     this.entradasRes = resDB;
-    console.log(resDB.error);
     if (resDB.error === null) {
       this.alert = {
         state: true,
@@ -166,7 +167,7 @@ export class Home extends LitElement {
   async _deleteData(evt) {
     const id = evt.detail.id;
     const res = await fetch(
-      "http://77.243.85.199/api/userBlog/eliminar/" + id,
+      "http://localhost:3000/api/userBlog/eliminar/" + id,
       {
         method: "DELETE",
         headers: {
@@ -176,7 +177,6 @@ export class Home extends LitElement {
     );
     const resDB = await res.json();
     this._getData();
-    console.log(resDB);
   }
   async _editData(evt){
     const updateEntradaPrev = evt.detail.data;
@@ -195,22 +195,15 @@ export class Home extends LitElement {
       updateEntradaPrev.imgUri[0].name
     );
     }
-    //datosForm.append(
-      //"imgUri",
-      //newEntradaPrev.imgUri[0],
-      //newEntradaPrev.imgUri[0].name
-    //);
-    console.log("editar server",evt.detail.data._id);
     const id = evt.detail.data._id;
     const res = await fetch(
-      "http://77.243.85.199/api/userBlog/editar/" + id,
+      "http://localhost:3000/api/userBlog/editar/" + id,
       {
         method: "PUT",
         body: datosForm,
       }
     );
     const resDB = await res.json();
-    console.log('editar respuesta',resDB)
     this.modalActive = false
     this._getData();
   }

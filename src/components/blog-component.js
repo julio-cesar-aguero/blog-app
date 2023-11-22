@@ -30,7 +30,7 @@ export class BlogComponent extends LitElement {
                       <img id="${entrada._id}" src="../../assets/delete.png" @click="${this._handleDeleteEntrada}" class="btn__action btn__alert">
                     </div>
                       <img
-                        src="http://77.243.85.199/images/entradas/${entrada.imgUri}"
+                        src="http://localhost:3000/images/entradas/${entrada.imgUri}"
                         alt=""
                         class="blog-banner-img"
                       />

@@ -2,6 +2,7 @@ import { LitElement, html, css } from "lit";
 import styles from "../css/login-styles";
 import "./login-component";
 import "./register-component";
+import { Router } from '@vaadin/router';
 import { users } from "../data/index";
 
 export class LoginRegisterComponent extends LitElement {
@@ -20,13 +21,28 @@ export class LoginRegisterComponent extends LitElement {
       message: "",
     };
   }
+connectedCallback() {
+    super.connectedCallback();
+  }
+  firstUpdated(){
+    super.firstUpdated();
+    
+    if(localStorage.getItem('sessionActive')){
+      Router.go({ pathname: "/home" });
+    }
+  }
+ 
   render() {
     return html`
-      <div class="wrapper">
+      
+    <div class="wrapper">
+      
         ${this.view
-          ? html`<login-component
+          ? html`
+          <login-component
               .alertToast="${this.alert}"
               @sign="${this._login}"
+              @signGoogle="${this.methodX}"
               @changeV=${this._changeComponent}
             ></login-component>`
           : html`<register-component
@@ -34,6 +50,20 @@ export class LoginRegisterComponent extends LitElement {
             ></register-component>`}
       </div>
     `;
+  }
+
+  async methodX(){
+    window.open("http://localhost:3000/api/google", "_self")
+    const res = await fetch("http://localhost:3000/api/login/success", {
+      method: "GET",
+      credentials: 'include',
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const resDB = await res.json();
+    console.log(resDB);
+    
   }
   async _login(e) {
     const data = e.detail.data;
@@ -49,6 +79,7 @@ export class LoginRegisterComponent extends LitElement {
       }
       const sessionUser = await this._getSession(userPrev);
       console.log("session", sessionUser);
+      localStorage.setItem("sessionActive", JSON.stringify(sessionUser));
       this.dispatchEvent(
         new CustomEvent("success", {
           detail: { sessionUser },
@@ -66,7 +97,7 @@ export class LoginRegisterComponent extends LitElement {
     }
   }
   async _getSession(user) {
-    const res = await fetch("http://77.243.85.199/api/login", {
+    const res = await fetch("http://localhost:3000/api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

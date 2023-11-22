@@ -10,7 +10,6 @@ export class LoginComponent extends LitElement {
       enabledSubmit: { type: Boolean },
       form: { type: Object },
       alertToast: { type: Object },
-      
     };
   }
   constructor() {
@@ -20,6 +19,9 @@ export class LoginComponent extends LitElement {
       email: "anahi3@prueba.com",
       password: "123456",
     };
+  }
+  firstUpdated() {
+    super.firstUpdated();
   }
   static styles = [styles];
   render() {
@@ -84,7 +86,9 @@ export class LoginComponent extends LitElement {
           <span>OR</span>
           <br />
           <div id="signInButton">
-            <google-login @successGoogle="${this.onSignIn}"></google-login>
+            <button @click="${this.loginGoogle}">
+              Iniciar Sesión con Google
+            </button>
           </div>
           <div id="signInButton">
             <facebook-login
@@ -114,6 +118,19 @@ export class LoginComponent extends LitElement {
       </div>
     `;
   }
+ 
+  loginGoogle(e){
+    e.preventDefault();
+    const social = 'google'
+    console.log(social);
+    this.dispatchEvent(
+      new CustomEvent("signGoogle", {
+        detail: { data: social },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
   _login(e) {
     e.preventDefault();
     this.dispatchEvent(
@@ -123,11 +140,6 @@ export class LoginComponent extends LitElement {
         composed: true,
       })
     );
-  }
-  onSignIn(evt) {
-    evt.preventDefault();
-    localStorage.setItem("Google", evt.detail.params);
-    console.log("Google", evt.detail);
   }
   _handleChange(evt) {
     const { target } = evt;

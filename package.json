@@ -10,6 +10,8 @@
     "start": "web-dev-server"
   },
   "dependencies": {
+    "@vaadin/router": "^1.7.5",
+    "@vaadin/vaadin-charts": "^23.3.26",
     "gapi-script": "^1.2.0",
     "lit": "^2.0.2",
     "react-google-login": "^5.2.2"

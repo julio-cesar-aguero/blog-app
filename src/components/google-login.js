@@ -29,7 +29,7 @@ export class GoogleLogin extends LitElement {
 
   render() {
     return html`
-      <button @click="${this._singIn}">
+      <button>
         <ion-icon name="logo-google"></ion-icon>Login with Google
       </button>
     `;
@@ -37,28 +37,7 @@ export class GoogleLogin extends LitElement {
   _singIn(e) {
     e.preventDefault();
     console.log("entro");
-    let oauth2EndPoint = "https://accounts.google.com/o/oauth2/v2/auth";
-    let form = document.createElement("form");
-    form.setAttribute("method", "GET");
-    form.setAttribute("action", oauth2EndPoint);
-    let params = {
-      client_id:
-        "209356081847-4daott4ap0m8b6cv7u39vk2hfbirp1g6.apps.googleusercontent.com",
-      redirect_uri: "http://localhost:8000",
-      response_type: "token",
-      scope: "https://www.googleapis.com/auth/userinfo.profile",
-      include_granted_scopes: "true",
-      state: "pass-through-value",
-    };
-    for (var p in params) {
-      let input = document.createElement("input");
-      input.setAttribute("type", "hidden");
-      input.setAttribute("name", p);
-      input.setAttribute("value", params[p]);
-      form.appendChild(input);
-    }
-    document.body.appendChild(form);
-    form.submit();
+    const params = 'params';
     this.dispatchEvent(
       new CustomEvent("successGoogle", {
         bubbles: true,

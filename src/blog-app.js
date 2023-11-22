@@ -1,25 +1,24 @@
-import { LitElement, html, css } from 'lit';
-import './components/ navbar-component.js';
-import './components/login-register-component.js';
-import './views/Home'
+import { LitElement, html, css } from "lit";
+import "./components/ navbar-component.js";
+import "./components/login-register-component.js";
+import "./views/Layout.js";
+import { Router } from "@vaadin/router";
 
 class BlogApp extends LitElement {
   static properties = {
     header: { type: String },
     sessionUser: { type: Object },
-    isLogged: { type: Boolean }
-  }
-
+    isLogged: { type: Boolean },
+  };
 
   static styles = css`
-
-    :host{
+    :host {
       position: relative;
       background-color: var(--bg-color);
       overflow-y: hidden;
     }
 
-    main{
+    main {
       background-color: var(--bg-color);
       position: relative;
       z-index: 10;
@@ -31,57 +30,80 @@ class BlogApp extends LitElement {
       justify-content: center;
       align-items: center;
     }
-    
   `;
 
   constructor() {
     super();
-    this.header = 'My app';
+    this.header = "My app";
     this.isLogged = false;
   }
   connectedCallback() {
     super.connectedCallback();
     this._isSessionUserActive();
   }
- 
+  firstUpdated(){
+    super.firstUpdated();
+    this._handleSuccessGoogle();
+  }
   render() {
     return html`
-    
-      
-      
-    <navbar-component .logged="${this.isLogged}" .session="${this.sessionUser}" @logout=${this._handleLogOut}></navbar-component>
-    <main>
-    ${this.isLogged ? html`<home-view .session="${this.sessionUser}"></home-view>` : html`<login-register-component @success="${this._handleSuccess}"></login-register-component>`
-      }
-    </main>
+      <navbar-component
+        .logged="${this.isLogged}"
+        .session="${this.sessionUser}"
+        @logout=${this._handleLogOut}
+      ></navbar-component>
+      <main>
+        ${this.isLogged
+          ? html`<layout-view><slot name="outlet"></slot></layout-view>`
+          : html`<login-register-component
+              @success="${this._handleSuccess}"
+              @successGoogle="${this._handleSuccessGoogle}"
+            ></login-register-component>`}
+      </main>
     `;
   }
+ 
   _isSessionUserActive() {
-    if (localStorage.getItem('sessionActive')) {
-      const session = JSON.parse(localStorage.getItem('sessionActive'));
+    if (localStorage.getItem("sessionActive")) {
+      const session = JSON.parse(localStorage.getItem("sessionActive"));
       this.isLogged = true;
       this.sessionUser = session;
-      this.sessionUser = { ...this.sessionUser }
+      this.sessionUser = { ...this.sessionUser };
     }
   }
+  
   _handleSuccess(evt) {
-    
-    console.log("session user++",evt.detail.sessionUser.data.token);
-    console.log(localStorage.getItem('token'))
-    if (evt.detail.sessionUser.data.token === localStorage.getItem('token')) {
+    if (evt.detail.sessionUser.data.token === localStorage.getItem("token")) {
       const session = evt.detail.sessionUser;
       this.isLogged = true;
-      localStorage.setItem('sessionActive', JSON.stringify(session));
+      localStorage.setItem("sessionActive", JSON.stringify(session));
+      Router.go({ pathname: "/home" });
+    }
+  }
+  async _handleSuccessGoogle(){
+    const res = await fetch("http://localhost:3000/api/login/success", {
+      method: "GET",
+      credentials: 'include',
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const resDB = await res.json();
+    if (resDB.success === true) {
+      const session = resDB.user;
+      this.isLogged = true;
+      localStorage.setItem("sessionActive", JSON.stringify(session));
+      Router.go({ pathname: "/home" });
     }
   }
   _handleLogOut(evt) {
-    if (evt.detail.sessionState === 'destroy') {
+    if (evt.detail.sessionState === "destroy") {
       this.isLogged = false;
       this.requestUpdate();
-      localStorage.removeItem('token');
-      localStorage.removeItem('sessionActive');
+      localStorage.removeItem("token");
+      localStorage.removeItem("sessionActive");
+      Router.go({ pathname: "/login" });
     }
   }
 }
-
-customElements.define('blog-app', BlogApp);
+customElements.define("blog-app", BlogApp);

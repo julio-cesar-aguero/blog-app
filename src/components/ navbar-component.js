@@ -1,6 +1,7 @@
 import { LitElement, html, css } from "lit";
 import styles from "../css/navbar-styles";
 import { Features } from "../constants/index";
+import { Router } from "@vaadin/router";
 
 export class NavbarComponent extends LitElement {
   static get styles() {
@@ -35,11 +36,13 @@ export class NavbarComponent extends LitElement {
     return html`
       <div class="container">
         <nav class="${this.logged ? "nav" : "nav nav--white"}">
-          <img
-            class="nav__img"
-            src="../../assets/logo-black.svg"
-            alt="logo-img"
-          />
+          <a href="/home">
+            <img
+              class="nav__img"
+              src="../../assets/logo-black.svg"
+              alt="logo-img"
+            />
+          </a>
           <div
             class=${this.isOpen
               ? "nav__hamburger nav__hamburger--open"
@@ -97,10 +100,9 @@ export class NavbarComponent extends LitElement {
                 </ul>
               </li>
               <li class="nav__item">
-                <a href="" class="nav__link">Careers</a>
-              </li>
-              <li class="nav__item">
-                <a href="" class="nav__link">About</a>
+                <a data-link="/about" @click="${this._navigateTo}" class="nav__link"
+                  >About</a
+                >
               </li>
               <div class="switches">
                 <div
@@ -162,6 +164,9 @@ export class NavbarComponent extends LitElement {
         </nav>
       </div>
     `;
+  }
+  _navigateTo(evt) {
+    Router.go({ pathname: `${evt.target.dataset.link}` });
   }
   _logOut() {
     const sessionState = "destroy";
