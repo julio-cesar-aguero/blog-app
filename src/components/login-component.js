@@ -87,11 +87,13 @@ export class LoginComponent extends LitElement {
           <br />
           <div id="signInButton">
             <button @click="${this.loginGoogle}">
+            <ion-icon name="logo-google"></ion-icon>
               Iniciar Sesión con Google
             </button>
           </div>
           <div id="signInButton">
             <button @click="${this.loginFacebook}">
+            <ion-icon name="logo-facebook"></ion-icon>
               Iniciar Sesión con Facebook
             </button>
           </div>

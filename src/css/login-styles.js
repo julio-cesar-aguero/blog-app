@@ -124,6 +124,8 @@ export default css`
   .login-register p a:hover{
     text-decoration: underline;
   }
+
+
   .register{
     height: auto;
   }
@@ -165,5 +167,26 @@ export default css`
   .g-signin2{
     background-color: red;
     cursor: pointer;
+  }
+  #signInButton{
+    display: grid;
+    place-content: center;
+    padding: 0.2em;
+    width: 100%;
+  }
+  #signInButton button{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  #signInButton ion-icon{
+    height: 100%;
+    margin-right: 0.3em;
   }
 `;
